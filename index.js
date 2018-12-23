@@ -251,6 +251,7 @@ const git = {
       exec('git push -u origin master', (error, stdout, stderr) => {
         if (error) {
           console.error(`exec error: ${error}`);
+          console.log('you can try:1.$git credential-manager uninstall; 2.$git credential-manager install')
           return;
         } 
         // console.log(`stdout: ${stdout}`);
