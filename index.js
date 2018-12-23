@@ -187,8 +187,8 @@ const git = {
       inquirer.prompt(questions).then(answers => {
         exec('git commit -m ' + '"' + answers.commitMessage + '"', (error, stdout, stderr) => {
           if (error) {
-            console.error(`exec error: ${error}`);
-            return;
+            // console.error(`exec error: ${error}`);
+            // return;
           } 
           // console.log(`stdout: ${stdout}`);
           resolve();
