@@ -2,6 +2,7 @@
 const { exec } = require('child_process');
 const inquirer = require('inquirer');
 const fs = require('fs');
+const path = require('path');
 
 gitInstructions(async answers => {
   switch(answers.git_cmd){
@@ -16,6 +17,7 @@ gitInstructions(async answers => {
       await git.push();
       break;
     case 'git push':
+      await git.envInit();
       await git.add();
       await git.configSSL();
       await git.commit();
@@ -49,6 +51,21 @@ async function gitInstructions(cmdSeries){
 
 
 const git = {
+  //envInit,删除index.lock,防止更新失败
+  envInit:()=>{
+    return new Promise((resolve,reject) => {
+      let absolutePath = path.resolve(__dirname,'./.git/index.lock')
+      exec('del '+absolutePath, (error, stdout, stderr) => {
+        if (error) {
+          // console.error(`exec error: ${error}`);
+          // reject();
+          return;
+        } 
+        resolve();
+        console.log(`stdout: ${stdout}`);
+      });
+    });
+  },
   //1.执行git init命令
   init:() => {
     return new Promise((resolve,reject) => {
